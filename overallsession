@@ -1,0 +1,66 @@
+[session_id,neuron_id]=region_finder("VISp")
+[session_idone,neuron_idone]=region_finder("PL")
+[session_idtwo,neuron_idtwo]=region_finder("MOs")
+[session_idthree,neuron_idthree]=region_finder("CP")
+[session_idfour,neuron_idfour]=region_finder("SNr")
+[session_idfive,neuron_idfive]=region_finder("ZI")
+[session_idsix,neuron_idsix]=region_finder("SCm")
+
+newone=[]
+newone.append(session_idone)
+newone.append(session_idtwo)
+newone.append(session_idthree)
+newone.append(session_idfour)
+newone.append(session_idfive)
+newone.append(session_idsix)
+
+
+newone=sum(newone,[])
+print(session_id)
+print(newone)
+apple=list(set(session_id) & set(newone))
+print(apple)
+
+
+#pdb.set_trace()
+#dataset=alldat[session_id]
+#[new_ids]=what_side(dataset,'Contralateral')
+#session_idx ,neuron_idx = region_finder(region)
+storer=[]
+bins=0.01
+test=session_id[1]
+word='contrast_right'
+other='contrast_left'
+#for i in session_id:
+    #dat=alldat[test]
+    #barea=dat['brain_area']
+    #datter=dat['spks'][barea=='VISp']
+    #trial_FR = np.sum(datter, axis=0) / (np.shape(dat['spks'])[2] * bins / 1000)
+    #norm_FR = trial_FR/ np.mean(trial_FR) #array of normalized FR for each neuron in area on L or R choice trials (n_neurons x n_trials)
+    #print(norm_FR)
+    #pdb.set_trace()
+    #storer.append(norm_FR)
+dat=alldat[test]
+barea=dat['brain_area']
+datter=dat['spks'][barea=='VISp']
+#pdb.set_trace()
+
+datter=datter[:,np.logical_and(dat[word]>dat[other],dat['feedback_type']>0)]
+#datter=datter[:,dat['feedback_type']>0]
+
+pdb.set_trace()
+#if dataset[word][i] >0. and dataset[other][i] ==0.:
+
+trial_FR = np.sum(datter, axis=2) / (np.shape(dat['spks'])[2] * bins / 1000)
+norm_FR = trial_FR/ np.mean(trial_FR) #array of normalized FR for each neuron in area on L or R choice trials (n_neurons x n_trials)
+#print(norm_FR)
+#pdb.set_trace()
+#storer.append(norm_FR)
+
+
+#turn dat['spks'] into [n_neurons, n_trials] array of normalized firing rates on each trial
+#bins = 0.01 #10ms bins
+#trial_FR = np.sum(dat['spks'], axis=2) / (np.shape(dat['spks'])[2] * bins / 1000)
+#norm_FR = trial_FR[:,LorR] / np.mean(trial_FR) #array of normalized FR for each neuron in area on L or R choice trials (n_neurons x n_trials)
+    
+#print(neuron_id)
